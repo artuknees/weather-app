@@ -23,8 +23,6 @@ const HomePage = () => {
     const [windDirection,setWindDirection] = useState(0);
     const now = new Date();
     const actualHourDisplay = now.toLocaleTimeString ('es-ES', {hour: '2-digit' , minute: '2-digit'});
-    // const actualHourForDay = parseInt(now.toLocaleTimeString ('es-ES', {hour: '2-digit'}));
-    
     const actualDateDisplay = now.toDateString();
     useEffect (() => {
         const fetchData = async () => {
@@ -40,6 +38,7 @@ const HomePage = () => {
             setHours(rawTimes);
             setStatus(responseAPI.request.status);
             const timeNow = parseInt(Date.now()); // now in miliseconds
+            const now = new Date();
             const timeIndex = times.findIndex(item => timeNow - item < 3600000 && timeNow - item > 0);
             setActualIndex(timeIndex);
             setTemperature(responseAPI.data.hourly.temperature_2m.map(item => item));

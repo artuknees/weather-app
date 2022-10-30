@@ -27,7 +27,7 @@ const HomePage = () => {
     
 
     const actualDateDisplay = now.toDateString();
-    useEffect (() => {
+    useEffect ((actualHourForDay) => {
         const fetchData = async () => {
             const responseAPI = await axios.get('https://api.open-meteo.com/v1/forecast?latitude=-34.58&longitude=-58.49&hourly=temperature_2m,rain,cloudcover&timezone=auto&current_weather=true');
             console.log(responseAPI);
@@ -44,12 +44,8 @@ const HomePage = () => {
             setTemperature(responseAPI.data.hourly.temperature_2m.map(item => item));
             if (actualHourForDay > 6 && actualHourForDay < 20 ) {
                 setDayOrNight('day');
-                console.log('day');
-                console.log(actualHourForDay);
             } else {
                 setDayOrNight('night');
-                console.log('night');
-                console.log(actualHourForDay);
             };        
         };
         fetchData();

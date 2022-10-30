@@ -2,15 +2,15 @@ import axios from 'axios';
 import React, { useEffect , useState } from 'react';
 import Plot from 'react-plotly.js';
 import Image from 'next/image';
-import clearDay from '../../public/animated/day.svg';
-import clearNight from '../../public/animated/night.svg';
-import cloudDay from '../../public/animated/cloudy-day-2.svg';
-import cloudNight from '../../public/animated/cloudy-night-2.svg';
-import rainy2 from '../../public/animated/rainy-2.svg';
-import rainy4 from '../../public/animated/rainy-4.svg'
-import rainy3 from '../../public/animated/rainy-3.svg';
-import rainy5 from '../../public/animated/rainy-5.svg'
-import rainy6 from '../../public/animated/rainy-6.svg';
+import clearDay from '../../public/day.svg';
+import clearNight from '../../public/night.svg';
+import cloudDay from '../../public/cloudy-day-2.svg';
+import cloudNight from '../../public/cloudy-night-2.svg';
+import rainy2 from '../../public/rainy-2.svg';
+import rainy4 from '../../public/rainy-4.svg'
+import rainy3 from '../../public/rainy-3.svg';
+import rainy5 from '../../public/rainy-5.svg'
+import rainy6 from '../../public/rainy-6.svg';
 
 
 const HomePage = () => {
@@ -20,14 +20,12 @@ const HomePage = () => {
     const [temperature,setTemperature] = useState([]);
     const [weatherCode, setweatherCode] = useState(0);
     const [actualIndex,setActualIndex] = useState(0);
-    const [dayState,setDayState] = useState('');
     const now = new Date();
     const actualHourDisplay = now.toLocaleTimeString ('es-ES', {hour: '2-digit' , minute: '2-digit'});
     const actualHourForDay = parseInt(now.toLocaleTimeString ('es-ES', {hour: '2-digit'}));
     
-
     const actualDateDisplay = now.toDateString();
-    useEffect ((actualHourForDay) => {
+    useEffect (() => {
         const fetchData = async () => {
             const responseAPI = await axios.get('https://api.open-meteo.com/v1/forecast?latitude=-34.58&longitude=-58.49&hourly=temperature_2m,rain,cloudcover&timezone=auto&current_weather=true');
             console.log(responseAPI);

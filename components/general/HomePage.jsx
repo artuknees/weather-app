@@ -12,7 +12,6 @@ import rainy3 from '../../public/rainy-3.svg';
 import rainy5 from '../../public/rainy-5.svg'
 import rainy6 from '../../public/rainy-6.svg';
 
-
 const HomePage = () => {
     const [status,setStatus] = useState(0);
     const [dayOrNigth , setDayOrNight] = useState('');
@@ -20,9 +19,11 @@ const HomePage = () => {
     const [temperature,setTemperature] = useState([]);
     const [weatherCode, setweatherCode] = useState(0);
     const [actualIndex,setActualIndex] = useState(0);
+    const [windSpeed,setWindSpeed] = useState(0);
+    const [windDirection,setWindDirection] = useState(0);
     const now = new Date();
     const actualHourDisplay = now.toLocaleTimeString ('es-ES', {hour: '2-digit' , minute: '2-digit'});
-    const actualHourForDay = parseInt(now.toLocaleTimeString ('es-ES', {hour: '2-digit'}));
+    // const actualHourForDay = parseInt(now.toLocaleTimeString ('es-ES', {hour: '2-digit'}));
     
     const actualDateDisplay = now.toDateString();
     useEffect (() => {
@@ -32,6 +33,8 @@ const HomePage = () => {
             const weatherCodeNow = responseAPI.data.current_weather.weathercode;
             console.log('weather code: ', weatherCodeNow);
             setweatherCode(responseAPI.data.current_weather.weathercode);
+            setWindSpeed(responseAPI.data.current_weather.windspeed);
+            setWindDirection(responseAPI.data.current_weather.winddirection);
             const times = responseAPI.data.hourly.time.map(item => parseInt(new Date(item).getTime())); // timestamp miliseconds
             const rawTimes = responseAPI.data.hourly.time.map(item => item); // timestamp miliseconds           
             setHours(rawTimes);
@@ -40,6 +43,7 @@ const HomePage = () => {
             const timeIndex = times.findIndex(item => timeNow - item < 3600000 && timeNow - item > 0);
             setActualIndex(timeIndex);
             setTemperature(responseAPI.data.hourly.temperature_2m.map(item => item));
+            const actualHourForDay = parseInt(now.toLocaleTimeString ('es-ES', {hour: '2-digit'}));
             if (actualHourForDay > 6 && actualHourForDay < 20 ) {
                 setDayOrNight('day');
             } else {
@@ -63,19 +67,14 @@ const HomePage = () => {
                         <div>
                             {weatherCode === 0 && dayOrNigth === 'day' ? <Image src={clearDay} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode === 0 && dayOrNigth === 'nigth' ? <Image src={clearNight} width={200} alt='sunny' priority={true} /> : null}
-                            
                             {weatherCode >= 1 && weatherCode <=3 && dayOrNigth === 'day' ? <Image src={cloudDay} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 1 && weatherCode <=3 && dayOrNigth === 'nigth' ? <Image src={cloudNight} width={200} alt='sunny' priority={true} /> : null}
-
                             {weatherCode >= 45 && weatherCode <=57 && dayOrNigth === 'day' ? <Image src={rainy2} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 45 && weatherCode <=57 && dayOrNigth === 'nigth' ? <Image src={rainy4} width={200} alt='sunny' priority={true} /> : null}
-                            
                             {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'day' ? <Image src={rainy3} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'nigth' ? <Image src={rainy5} width={200} alt='sunny' priority={true} /> : null}
-                            
                             {weatherCode >= 66 && weatherCode <=67 && dayOrNigth === 'day' ? <Image src={rainy6} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 66 && weatherCode <=67 && dayOrNigth === 'nigth' ? <Image src={rainy6} width={200} alt='sunny' priority={true} /> : null}
-                            
                             {/* {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'day' ? <Image src={clearNight} width={150} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'nigth' ? <Image src={clearDay} width={150} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'day' ? <Image src={clearNight} width={150} alt='sunny' priority={true} /> : null}
@@ -88,52 +87,75 @@ const HomePage = () => {
                             {weatherCode >= 45 && weatherCode <=57 ? 'Drizzle' : null}
                             {weatherCode >= 61 && weatherCode <=65 ? 'Rain' : null}
                             {weatherCode >= 66 && weatherCode <=67 ? 'Freezing Rain' : null}
-
                         </div>
                         <div className='font-semibold text-white text-lg'>{actualHourDisplay}</div>
                         <div className='text-base font-semibold text-white'>{actualDateDisplay}</div>
                     </div>
-                
 
+                    <section className='flex flex-col mt-4'>
+                        <div className='flex flex-row justify-evenly'>
+                            <div className='flex flex-col items-center'>
+                                <p className='text-[20px] font-semibold text-white'>Wind direction</p>
+                                <div className='text-[18px] font-semibold text-white'>{windDirection > 0 && windDirection <=90 ? 'NE' : null}</div>
+                                <div className='text-[18px] font-semibold text-white'>{windDirection > 90 && windDirection <=180 ? 'SE' : null}</div>
+                                <div className='text-[18px] font-semibold text-white'>{windDirection > 180 && windDirection <=270 ? 'SO' : null}</div>
+                                <div className='text-[18px] font-semibold text-white'>{windDirection > 270 && windDirection <=360 ? 'NO' : null}</div>
+                            </div>
+                            <div className='border border-white'></div>
+                            <div className='flex flex-col items-center'>
+                                <p className='text-[20px] font-semibold text-white'>Wind speed</p>
+                                <div className='text-[18px] font-semibold text-white'>{windSpeed} km/h</div>
+                            </div>
+                        </div>
+                        {/* <div className='flex flex-row'>
+                            <div></div>
+                            <div></div>
+                        </div> */}
+                    </section>
+            
+                    <div className='overflow-x-scroll lg:overflow-x-auto h-[240px] ml-2 text-center'>
+                    {/* <div className=' overflow-x-scroll h-[240px] self-center  ml-2'> */}
 
-                    <Plot className='ml-2'
-                        data={[
-                            {
-                                x: hours.slice(actualIndex,actualIndex+16),
-                                y: temperature.slice(actualIndex,actualIndex+16),
-                                type: 'scatter',
-                                mode: 'lines+markers',
-                                marker: {color: '#272727'},
-                            },
-                        ]}
-                        layout={ 
-                            {
-                            plot_bgcolor:'rgb(20 184 166)',
-                            paper_bgcolor:"rgb(20 184 166)",
-                            margin: {autoexpand: true,
-                                l:35, r:35 , t: 20 , b:20 , pad: 0},
-                            height: 180, 
-                            yaxis: {
-                                tickfont: {
-                                    color: '#ffffff'
+                        <Plot className=''
+                            data={[
+                                {
+                                    x: hours.slice(actualIndex,actualIndex+23),
+                                    y: temperature.slice(actualIndex,actualIndex+23),
+                                    type: 'scatter',
+                                    mode: 'lines+markers',
+                                    marker: {color: '#272727'},
                                 },
-                                gridcolor: '#bdbdbd',
-                                title: {
-                                    text: 'T [°C]',
-                                    font: {
+                            ]}
+                            layout={ 
+                                {
+                                plot_bgcolor:'rgb(20 184 166)',
+                                paper_bgcolor:"rgb(20 184 166)",
+                                margin: {autoexpand: true,
+                                    l:35, r:35 , t: 20 , b:20 , pad: 0},
+                                height: 180, 
+                                width: 1200,
+                                yaxis: {
+                                    tickfont: {
                                         color: '#ffffff'
+                                    },
+                                    gridcolor: '#bdbdbd',
+                                    title: {
+                                        text: 'T [°C]',
+                                        font: {
+                                            color: '#ffffff'
+                                        }
                                     }
-                                }
-                            },
-                            xaxis: {
-                                tickfont: {
-                                    color: '#ffffff'
                                 },
-                                gridcolor: '#bdbdbd',
+                                xaxis: {
+                                    tickfont: {
+                                        color: '#ffffff'
+                                    },
+                                    gridcolor: '#bdbdbd',
+                                }
+                                } 
                             }
-                            } 
-                        }
-                    />
+                        />
+                    </div>
 
                 </div>
             </div>

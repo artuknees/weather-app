@@ -24,6 +24,9 @@ const HomePage = () => {
     const now = new Date();
     const actualHourDisplay = now.toLocaleTimeString ('es-ES', {hour: '2-digit' , minute: '2-digit'});
     const actualDateDisplay = now.toDateString();
+    const config = {
+        staticPlot: true
+      };
     useEffect (() => {
         const fetchData = async () => {
             const responseAPI = await axios.get('https://api.open-meteo.com/v1/forecast?latitude=-34.58&longitude=-58.49&hourly=temperature_2m,rain,cloudcover&timezone=auto&current_weather=true');
@@ -100,7 +103,7 @@ const HomePage = () => {
                                 <div className='text-[18px] font-semibold text-white'>{windDirection > 180 && windDirection <=270 ? 'SO' : null}</div>
                                 <div className='text-[18px] font-semibold text-white'>{windDirection > 270 && windDirection <=360 ? 'NO' : null}</div>
                             </div>
-                            <div className='border border-white'></div>
+                            <div className='border border-white bg-white'></div>
                             <div className='flex flex-col items-center'>
                                 <p className='text-[20px] font-semibold text-white'>Wind speed</p>
                                 <div className='text-[18px] font-semibold text-white'>{windSpeed} km/h</div>
@@ -115,7 +118,7 @@ const HomePage = () => {
                     <div className='overflow-x-scroll lg:overflow-x-auto h-[240px] ml-2 text-center'>
                     {/* <div className=' overflow-x-scroll h-[240px] self-center  ml-2'> */}
 
-                        <Plot className=''
+                        <Plot className='' 
                             data={[
                                 {
                                     x: hours.slice(actualIndex,actualIndex+23),
@@ -139,9 +142,10 @@ const HomePage = () => {
                                     },
                                     gridcolor: '#bdbdbd',
                                     title: {
-                                        text: 'T [°C]',
+                                        text: 'Temperature',
                                         font: {
-                                            color: '#ffffff'
+                                            color: '#ffffff',
+                                            family: 'Chivo'
                                         }
                                     }
                                 },
@@ -153,6 +157,7 @@ const HomePage = () => {
                                 }
                                 } 
                             }
+                            config={config}
                         />
                     </div>
 

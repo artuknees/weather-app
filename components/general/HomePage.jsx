@@ -53,7 +53,7 @@ const HomePage = () => {
     },[]);
 
 	return (
-		<div className='w-full min-h-screen h-full bg-teal-500'>
+		<div className={dayOrNigth === 'day' ? 'w-full min-h-screen h-full bg-teal-500' : 'w-full min-h-screen h-full bg-teal-900'}>
             { status === 0 ? null : 
             <div className='flex flex-col w-full h-full'>
                 <div className='flex flex-col w-full h-full'>
@@ -65,19 +65,19 @@ const HomePage = () => {
                     <div className='flex flex-col w-full h-full items-center'>
                         <div>
                             {weatherCode === 0 && dayOrNigth === 'day' ? <Image src={clearDay} width={200} alt='sunny' priority={true} /> : null}
-                            {weatherCode === 0 && dayOrNigth === 'nigth' ? <Image src={clearNight} width={200} alt='sunny' priority={true} /> : null}
+                            {weatherCode === 0 && dayOrNigth === 'night' ? <Image src={clearNight} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 1 && weatherCode <=3 && dayOrNigth === 'day' ? <Image src={cloudDay} width={200} alt='sunny' priority={true} /> : null}
-                            {weatherCode >= 1 && weatherCode <=3 && dayOrNigth === 'nigth' ? <Image src={cloudNight} width={200} alt='sunny' priority={true} /> : null}
+                            {weatherCode >= 1 && weatherCode <=3 && dayOrNigth === 'night' ? <Image src={cloudNight} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 45 && weatherCode <=57 && dayOrNigth === 'day' ? <Image src={rainy2} width={200} alt='sunny' priority={true} /> : null}
-                            {weatherCode >= 45 && weatherCode <=57 && dayOrNigth === 'nigth' ? <Image src={rainy4} width={200} alt='sunny' priority={true} /> : null}
+                            {weatherCode >= 45 && weatherCode <=57 && dayOrNigth === 'night' ? <Image src={rainy4} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'day' ? <Image src={rainy3} width={200} alt='sunny' priority={true} /> : null}
-                            {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'nigth' ? <Image src={rainy5} width={200} alt='sunny' priority={true} /> : null}
+                            {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'night' ? <Image src={rainy5} width={200} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 66 && weatherCode <=67 && dayOrNigth === 'day' ? <Image src={rainy6} width={200} alt='sunny' priority={true} /> : null}
-                            {weatherCode >= 66 && weatherCode <=67 && dayOrNigth === 'nigth' ? <Image src={rainy6} width={200} alt='sunny' priority={true} /> : null}
+                            {weatherCode >= 66 && weatherCode <=67 && dayOrNigth === 'night' ? <Image src={rainy6} width={200} alt='sunny' priority={true} /> : null}
                             {/* {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'day' ? <Image src={clearNight} width={150} alt='sunny' priority={true} /> : null}
-                            {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'nigth' ? <Image src={clearDay} width={150} alt='sunny' priority={true} /> : null}
+                            {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'night' ? <Image src={clearDay} width={150} alt='sunny' priority={true} /> : null}
                             {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'day' ? <Image src={clearNight} width={150} alt='sunny' priority={true} /> : null}
-                            {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'nigth' ? <Image src={clearDay} width={150} alt='sunny' priority={true} /> : null} */}
+                            {weatherCode >= 61 && weatherCode <=65 && dayOrNigth === 'night' ? <Image src={clearDay} width={150} alt='sunny' priority={true} /> : null} */}
                         </div>
                         <div className='text-[52px] font-semibold text-white mb-4'>{temperature[actualIndex]} °C</div>
                         <div className='text-xl font-semibold text-white'>
@@ -127,8 +127,8 @@ const HomePage = () => {
                             ]}
                             layout={ 
                                 {
-                                plot_bgcolor:'rgb(20 184 166)',
-                                paper_bgcolor:"rgb(20 184 166)",
+                                plot_bgcolor: 'rgba(0,0,0,0)',
+                                paper_bgcolor:'rgba(0,0,0,0)',
                                 margin: {autoexpand: true,
                                     l:35, r:35 , t: 20 , b:20 , pad: 0},
                                 height: 180, 

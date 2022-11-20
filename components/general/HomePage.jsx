@@ -10,6 +10,7 @@ import SummaryTable from '../containers/SummaryTable';
 import WeatherCodeHourly from '../WeatherCodeHourly';
 import WeatherCodeDaily from '../WeatherCodeDaily';
 import arrow from '../../public/arrow.svg';
+import ScrollArrow from '../ScrollArrow';
 
 
 const HomePage = () => {
@@ -19,7 +20,7 @@ const HomePage = () => {
     const actualDateDisplay = now.toDateString();
 
 	return (
-		<div className={dayOrNight === 'day' ? 'w-full min-h-screen h-full bg-teal-500' : 'w-full min-h-screen h-full bg-teal-900'}>
+		<div className={dayOrNight === 'day' ? 'w-full min-h-screen h-full bg-teal-500 pb-5' : 'w-full min-h-screen h-full bg-teal-900 pb-5'}>
             { requestStatus === 200 && 
             <div className='w-full'>
                 <div className='flex flex-col w-full h-full'>
@@ -33,33 +34,23 @@ const HomePage = () => {
                             <p className='text-base font-semibold text-white'>{actualDateDisplay}</p>
                         </div>
                         <SummaryTable/>
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col mx-3'>
                             <TemperaturePlot/>
-                            <div className='flex flex-col items-end mr-5 lg:hidden'>
-                                <Image src={arrow} alt={'arrow'}/>
-                            </div>
+                            <ScrollArrow/>
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col mx-5'>
+                <div className='flex flex-col mx-3 mt-2'>
                     <WeatherCodeHourly generalData={generalData} actualTimeIndex={actualTimeIndex} dayOrNight={dayOrNight}/>
-                    <div className='flex flex-col items-end lg:hidden'>
-                        <Image src={arrow} alt={'arrow'}/>
-                    </div>
-
+                    <ScrollArrow/>
                 </div>
-                <div className='flex flex-col w-full h-full mt-3'>
+                <div className='flex flex-col mt-2 mx-3'>
                     <TemperatureDailyPlot/>
-                    <div className='flex flex-col items-end mr-5 lg:hidden'>
-                        <Image src={arrow} alt={'arrow'}/>
-                    </div>
-
+                    <ScrollArrow/>
                 </div>
-                <div className='flex flex-col mx-5'>
+                <div className='flex flex-col mx-3 mt-2'>
                     <WeatherCodeDaily generalData={generalData} />
-                    <div className='flex flex-col items-end lg:hidden'>
-                        <Image src={arrow} alt={'arrow'}/>
-                    </div>
+                    <ScrollArrow/>
                 </div>
             </div>
             }
